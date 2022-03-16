@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>COVID-19 TRACKING ADMIN</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- pure css layout -->
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/pure-min.css" integrity="sha384-Uu6IeWbM+gzNVXJcM9XV3SohHtmWE+3VGi496jvgX1jyvDTXfdK+rfZc8C1Aehk5" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/base-min.css">
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/grids-responsive-min.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+
+    <link rel="stylesheet" href="stylesheets/style.css">
+
+    <script src="/javascripts/admin.js" async></script>
+</head>
+<body>
+    <div class="header">
+        <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed" id="menu">
+            <a class="pure-menu-heading" href="/">Home</a>
+            <div class="pure-menu-item" id="timeP"></div>
+            <ul class="pure-menu-list">
+                <li class="pure-menu-item"><button class="pure-button" onclick="logout()">log out</button></li>
+            </ul>
+        </div>
+    </div>
+    <div class="container" v-bind:class="{'darkMode': dark_mode}"  id="main">
+        <div class="content">
+            <h1 class="head center">Admins</h1>
+            <h1 class="head center">Manage admin information</h1>
+            <form class="pure-form pure-form-aligned">
+                <fieldset>
+                    <p id="uid" class="center"></p>
+                    <div class="pure-control-group">
+                        <label for="afterUserName" id="preUserName">Username</label>
+                        <input type="text" id="afterUserName" placeholder="Username" />
+                        <span class="pure-form-message-inline">This is a required field.</span>
+                    </div>
+                    <div class="pure-control-group">
+                        <label for="afterPassword" id="prePassword">Password</label>
+                        <input type="password" id="afterPassword" placeholder="Password" />
+                        <span class="pure-form-message-inline">This is a required field.</span>
+                    </div>
+                    <div class="pure-control-group">
+                        <label for="afterFirstName" id="preFirstName">First name</label>
+                        <input type="text" id="afterFirstName" placeholder="First Name" />
+                        <span class="pure-form-message-inline">This is a required field.</span>
+                    </div>
+                    <div class="pure-control-group">
+                        <label for="afterLastName" id="preLastName">Last name</label>
+                        <input type="text" id="afterLastName" placeholder="Last Name" />
+                        <span class="pure-form-message-inline">This is a required field.</span>
+                    </div>
+                    <div class="pure-control-group">
+                        <label for="afterEmail" id="preEmail">Email Address</label>
+                        <input type="email" id="afterEmail" placeholder="Email Address" />
+                        <span class="pure-form-message-inline">This is a required field.</span>
+                    </div>
+                    <div class="pure-controls">
+                        <button type="button" class="pure-button pure-button-primary" onclick="changeAdminInfo()">Submit</button>
+                    </div>
+                </fieldset>
+            </form>
+            <h1 class="head center">Create and manage hotspot areas/venues & timeframes</h1>
+            <div class="twoPartsGrid">
+                <div>
+                    <h3 class="center">View all hotspots record</h3>
+                    <table class="pure-table pure-table-horizontal">
+                    <thead>
+                        <tr>
+                          <th>Hotspot id</th>
+                          <th>Check in code</th>
+                          <th>name</th>
+                          <th>Start date</th>
+                          <th>End date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="allHotspotsTable"></tbody>
+                    </table>
+                </div>
+                <div>
+                    <h3 class="center">Create locations</h3>
+                    <form class="pure-form pure-form-aligned">
+                        <div class="pure-control-group">
+                            <label for="createCheckInCode">Check in code</label>
+                            <input type="text" id="createCheckInCode" placeholder="Check in code" />
+                            <span class="pure-form-message-inline">Input a unique check in code, could be any combination of 0-9, a-z, A-Z.</span>
+                        </div>
+                        <div class="pure-control-group">
+                            <label for="createLocationName">Location name</label>
+                            <input type="text" id="createLocationName" placeholder="Location name" />
+                            <span class="pure-form-message-inline">Input name of location.</span>
+                        </div>
+                        <div class="pure-control-group">
+                            <label for="createLat">Latitude</label>
+                            <input type="text" id="createLat" placeholder="Latitude" />
+                            <span class="pure-form-message-inline">Input latitude of location.</span>
+                        </div>
+                        <div class="pure-control-group">
+                            <label for="createLng">Longitude</label>
+                            <input type="text" id="createLng" placeholder="Longitude" />
+                            <span class="pure-form-message-inline">Input longitude of location.</span>
+                        </div>
+                        <div class="pure-controls">
+                            <button type="button" class="pure-button pure-button-primary" onclick="createLocations()">Create new location</button>
+                        </div>
+                    </form>
+                </div>
+                <div>
+                    <h3 class="center">Create hotspots</h3>
+                    <form class="pure-form pure-form-aligned">
+                        <div class="pure-control-group">
+                            <label for="createHotspotCheckInCode">Check in code</label>
+                            <input type="text" id="createHotspotCheckInCode" placeholder="Check in code" />
+                            <span class="pure-form-message-inline">Input the check-in-code of location.</span>
+                        </div>
+                        <div class="pure-control-group">
+                            <label for="createStartDate">Start date</label>
+                            <input type="text" id="createStartDate" placeholder="YYYY-MM-DD" />
+                            <span class="pure-form-message-inline">Input the start date.</span>
+                        </div>
+                        <div class="pure-control-group">
+                            <label for="createEndDate">End date</label>
+                            <input type="text" id="createEndDate" placeholder="YYYY-MM-DD" />
+                            <span class="pure-form-message-inline">Input 2025-01-01 if it's still in danger.</span>
+                        </div>
+                        <div class="pure-controls">
+                            <button type="button" class="pure-button pure-button-primary" onclick="createHotspots()">Create hotspot</button>
+                        </div>
+                    </form>
+                </div>
+                <div>
+                    <h3 class="center">manage hotspots timeframes</h3>
+                    <form class="pure-form pure-form-aligned">
+                            <div class="pure-control-group">
+                                <label for="hotspotId">Hotspot id</label>
+                                <input type="text" id="hotspotId" placeholder="Hotspot id" />
+                                <span class="pure-form-message-inline">Input hotspot id from the table.</span>
+                            </div>
+                            <div class="pure-control-group">
+                                <label for="newStartDate">Start date</label>
+                                <input type="text" id="newStartDate" placeholder="YYYY-MM-DD" />
+                                <span class="pure-form-message-inline">Input new start date.</span>
+                            </div>
+                            <div class="pure-control-group">
+                                <label for="newEndDate">End date</label>
+                                <input type="text" id="newEndDate" placeholder="YYYY-MM-DD" />
+                                <span class="pure-form-message-inline">Input new end date.</span>
+                            </div>
+                            <div class="pure-controls">
+                                <button type="button" class="pure-button pure-button-primary" onclick="changeTimeframe()">Change hotspot timeframe</button>
+                            </div>
+                    </form>
+                </div>
+            </div>
+            <h1 class="head center">View the check-in history for users and venues</h1>
+            <div class="center">
+                <table class="pure-table pure-table-horizontal">
+                    <thead>
+                        <tr>
+                          <th>History id</th>
+                          <th>User uid</th>
+                          <th>Username</th>
+                          <th>Location name</th>
+                          <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="allCheckInHistoryTable"></tbody>
+                </table>
+            </div>
+            <h1 class="head center">See current hotspots on a map</h1>
+            <div id="googleMap"></div>
+            <h1 class="head center">Manage Users/Venues</h1>
+            <div class="twoPartsGrid">
+                <div>
+                    <h3 class="center">Allocate managers to venues</h3>
+                    <form class="pure-form">
+                        <fieldset>
+                            <input id="allocateVenueUid" type="text" placeholder="Venue owner/manager uid">
+                            <input id="allocateVenueCheckInCode" type="text" placeholder="location's check in code">
+                            <button type="button" class="pure-button" onclick="allocateVenues()">Submit</button>
+                        </fieldset>
+                    </form>
+                </div>
+                <div>
+                    <h3 class="center">Delete users</h3>
+                    <form class="pure-form">
+                        <fieldset>
+                            <input id="deleteUsers" type="text" placeholder="User uid">
+                            <button type="button" class="pure-button" onclick="removeUsers()">Delete</button>
+                        </fieldset>
+                    </form>
+                </div>
+                <div>
+                    <h3 class="center">Delete venue owners/managers</h3>
+                    <form class="pure-form">
+                        <fieldset>
+                            <input id="deleteOwners" type="text" placeholder="Owner/Manager uid">
+                            <button type="button" class="pure-button" onclick="removeOwners()">Delete</button>
+                        </fieldset>
+                    </form>
+                </div>
+                <div>
+                    <h3 class="center">Delete locations</h3>
+                    <form class="pure-form">
+                        <fieldset>
+                            <input id="deleteLocations" type="text" placeholder="Location's check in code">
+                            <button type="button" class="pure-button" onclick="removeLocations()">Delete</button>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+            <h1 class="head center">Sign-up other Health Officials</h1>
+            <div class="center">
+            <div class="signUpBox pure-u-1 pure-u-md-2-5">
+                    <form class="pure-form">
+                        <fieldset>
+                            <input id="adminName" type="text" placeholder="Username">
+                            <input id="adminPassword" type="password" placeholder="Password">
+                            <input id="adminFirstName" type="text" placeholder="First Name">
+                            <input id="adminLastName" type="text" placeholder="Last Name">
+                            <input id="adminEmail" type="email" placeholder="Email Address">
+                            <button type="button" class="pure-button" onclick="adminSignUp()">sign up</button>
+                        </fieldset>
+                    </form>
+                </div>
+            <div class="center">
+            <h3>Dark Mode:</h3>
+                <div class="pure-button-group" role="group" aria-label="Nightmode">
+                    <button class="pure-button" :class="{'pure-button-active':!dark_mode}" onclick="mainPage.dark_mode = false;">OFF</button>
+                    <button class="pure-button" :class="{'pure-button-active': dark_mode,'pure-button-primary': dark_mode}" onclick="mainPage.dark_mode = true;">ON</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

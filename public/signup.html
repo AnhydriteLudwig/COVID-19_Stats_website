@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>COVID-19 TRACKING SIGN UP</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- pure layout -->
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/menus-min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/buttons-min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/forms-min.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+
+    <link rel="stylesheet" href="stylesheets/style.css">
+    <script src="/javascripts/signup.js" async></script>
+</head>
+<body>
+    <div class="header">
+        <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed" id="menu">
+            <a class="pure-menu-heading" href="/">Home</a>
+            <div class="pure-menu-item" id="timeP"></div>
+            <ul class="pure-menu-list">
+                <li class="pure-menu-item" v-for= "item in menu"><a v-bind:href="item.url" class="pure-menu-link">{{item.title}}</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="container" v-bind:class="{'darkMode': dark_mode}"  id="main">
+        <div class="content center">
+            <h1 class="head">Select Who You Are</h1>
+            <div>
+                <button class="pure-button pure-button-primary" onclick="showUserSign()">User</button>
+                <button class="pure-button pure-button-primary" onclick="showOwnerSign()">Venue Owner/manager</button>
+                <button class="pure-button pure-button-primary" onclick="showAdminSign()">Admin</button>
+            </div>
+            <div id="userSignUp">
+                <h1 class="head">User Sign Up</h1>
+                <div class="signUpBox pure-u-1 pure-u-md-2-5">
+                    <form class="pure-form">
+                        <fieldset>
+                            <input id="userName" type="text" placeholder="Username">
+                            <input id="userPassword" type="password" placeholder="Password">
+                            <input id="userFirstName" type="text" placeholder="First Name">
+                            <input id="userLastName" type="text" placeholder="Last Name">
+                            <input id="userEmail" type="email" placeholder="Email Address">
+                            <button type="button" class="pure-button" onclick="userSignUp()">sign up</button>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+            <div id="ownerSignUp">
+                <h1 class="head">Owner Sign Up</h1>
+                <div class="signUpBox pure-u-1 pure-u-md-2-5">
+                    <form class="pure-form">
+                        <fieldset>
+                            <input id="ownerName" type="text" placeholder="User Name">
+                            <input id="ownerPassword" type="password" placeholder="Password">
+                            <button type="button" class="pure-button" onclick="ownerSignUp()">sign up</button>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+            <div id="adminSignUp">
+                <h1 class="head">Admin Sign Up</h1>
+                <div class="signUpBox pure-u-1 pure-u-md-2-5">
+                    <form class="pure-form">
+                        <fieldset>
+                            <input id="adminName" type="text" placeholder="Username">
+                            <input id="adminPassword" type="password" placeholder="Password">
+                            <input id="adminFirstName" type="text" placeholder="First Name">
+                            <input id="adminLastName" type="text" placeholder="Last Name">
+                            <input id="adminEmail" type="email" placeholder="Email Address">
+                            <button type="button" class="pure-button" onclick="adminSignUp()">sign up</button>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+            <h3>Dark Mode:</h3>
+            <div class="pure-button-group" role="group" aria-label="Nightmode">
+                <button class="pure-button" :class="{'pure-button-active':!dark_mode}" onclick="mainPage.dark_mode = false;">OFF</button>
+                <button class="pure-button" :class="{'pure-button-active': dark_mode,'pure-button-primary': dark_mode}" onclick="mainPage.dark_mode = true;">ON</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

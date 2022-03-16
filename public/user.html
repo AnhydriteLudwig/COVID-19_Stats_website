@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>COVID-19 TRACKING USER</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- pure css layout -->
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/pure-min.css" integrity="sha384-Uu6IeWbM+gzNVXJcM9XV3SohHtmWE+3VGi496jvgX1jyvDTXfdK+rfZc8C1Aehk5" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/base-min.css">
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/grids-responsive-min.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+
+    <link rel="stylesheet" href="stylesheets/style.css">
+
+    <script src="/javascripts/user.js" async></script>
+</head>
+<body>
+    <div class="header">
+        <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed" id="menu">
+            <a class="pure-menu-heading" href="/">Home</a>
+            <div class="pure-menu-item" id="timeP"></div>
+            <ul class="pure-menu-list">
+                <li class="pure-menu-item"><button class="pure-button" onclick="logout()">log out</button></li>
+            </ul>
+        </div>
+    </div>
+    <div class="container" v-bind:class="{'darkMode': dark_mode}"  id="main">
+        <div class="content">
+            <h1 class="head center">Users</h1>
+            <div class="twoPartsGrid">
+                <div>
+                    <h1 class="head center">Manage user information</h1>
+                    <form class="pure-form pure-form-aligned">
+                        <fieldset>
+                            <p id="uid" class="center"></p>
+                            <div class="pure-control-group">
+                                <label for="afterUserName" id="preUserName">Username</label>
+                                <input type="text" id="afterUserName" placeholder="Username" />
+                                <span class="pure-form-message-inline">This is a required field.</span>
+                            </div>
+                            <div class="pure-control-group">
+                                <label for="afterPassword" id="prePassword">Password</label>
+                                <input type="password" id="afterPassword" placeholder="Password" />
+                                <span class="pure-form-message-inline">This is a required field.</span>
+                            </div>
+                            <div class="pure-control-group">
+                                <label for="afterFirstName" id="preFirstName">First name</label>
+                                <input type="text" id="afterFirstName" placeholder="First Name" />
+                                <span class="pure-form-message-inline">This is a required field.</span>
+                            </div>
+                            <div class="pure-control-group">
+                                <label for="afterLastName" id="preLastName">Last name</label>
+                                <input type="text" id="afterLastName" placeholder="Last Name" />
+                                <span class="pure-form-message-inline">This is a required field.</span>
+                            </div>
+                            <div class="pure-control-group">
+                                <label for="afterEmail" id="preEmail">Email Address</label>
+                                <input type="email" id="afterEmail" placeholder="Email Address" />
+                                <span class="pure-form-message-inline">This is a required field.</span>
+                            </div>
+                            <div class="pure-controls">
+                                <button type="button" class="pure-button pure-button-primary" onclick="changeInfo()">Submit</button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+                <div>
+                    <h1 class="head center">Check in</h1>
+                    <form class="pure-form pure-form-aligned">
+                        <fieldset>
+                            <div class="pure-control-group">
+                                <label for="checkInCode">Check in code</label>
+                                <input type="text" id="checkInCode" placeholder="Check in Code" />
+                            </div>
+                            <div class="pure-controls">
+                                <button type="button" class="pure-button pure-button-primary" onclick="checkIn()">Check in</button>
+                            </div>
+                        </fieldset>
+                    </form>
+                    <h1 class="head center">Email notifications</h1>
+                    <form class="pure-form pure-form-aligned">
+                        <fieldset>
+                            <div class="pure-control-group">
+                                <label for="emailAddress">Enter yuor email address</label>
+                                <input type="text" id="emailAddress" placeholder="Email address"/>
+                            </div>
+                            <div class="pure-controls">
+                                <p>Send current hotspots</p>
+                                <button type="button" class="pure-button pure-button-primary" onclick="sendCurrentHotspots()">send</button>
+                                <p>Check whether you've been to a hotspot</p>
+                                <button type="button" class="pure-button pure-button-primary" onclick="sendWentHotspots()">send</button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+            <h1 class="head center">Map</h1>
+            <div class="center">
+                <button class="pure-button pure-button-primary" onclick="viewHistory()">View check-in history</button>
+                <button class="pure-button pure-button-primary" onclick="seeHotspots()">See current hotspots</button>
+            </div>
+            <div id="googleMap"></div>
+            <h1 class="head center">See if you've been to a hotspot</h1>
+            <div class="center">
+                <button class="pure-button pure-button-primary" onclick="wentHotspots()">Check</button>
+                <table class="pure-table pure-table-horizontal">
+                    <thead>
+                        <tr>
+                          <th>Location name</th>
+                          <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table"></tbody>
+                </table>
+            </div>
+            <div class="center">
+            <h3>Dark Mode:</h3>
+                <div class="pure-button-group" role="group" aria-label="Nightmode">
+                    <button class="pure-button" :class="{'pure-button-active':!dark_mode}" onclick="mainPage.dark_mode = false;">OFF</button>
+                    <button class="pure-button" :class="{'pure-button-active': dark_mode,'pure-button-primary': dark_mode}" onclick="mainPage.dark_mode = true;">ON</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
